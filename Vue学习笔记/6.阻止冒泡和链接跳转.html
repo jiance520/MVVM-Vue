@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.css"/>
+    <script type="text/javascript" src="../js/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            let vm = new Vue({
+                el: '.itany',
+                data: {},
+                methods: {
+                    show(e) {
+                        console.log(111);
+//                        e.stopPropagation();/*原生阻止事件冒泡*/
+                    },
+                    print() {
+                        console.log(222);
+                    },
+                    write() {
+                        console.log(333);
+                    },
+                    study(e) {
+                        console.log(444);
+//                        e.preventDefault();/*js原生阻止链接的默认事件*/
+                    }
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+<div class="itany">
+    <div @click="write">
+        <p @click="print">
+            <!--<button @click="show($event)">点击我</button>-->
+            <button @click.stop="show">点击我,阻止事件冒泡</button>
+        </p>
+    </div>
+    <!--<a href="#" @click="study($event)">链接</a>-->
+    <a href="#" @click.prevent="study">阻止默认事件链接</a>
+</div>
+</body>
+</html>
