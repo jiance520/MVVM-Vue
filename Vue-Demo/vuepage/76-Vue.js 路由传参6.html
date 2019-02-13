@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="js/vue.js" ></script>
+		<script type="text/javascript" src="js/vue-router.js" ></script>
+	</head>
+	<body>
+		
+	<div id="box">
+		<h1>Route props</h1>
+        <ul>
+        <li><router-link to="/">/</router-link></li>
+        <li><router-link to="/hello/you">/hello/you</router-link></li>
+        <li><router-link to="/static">/static</router-link></li>
+        <li><router-link to="/dynamic/1">/dynamic/1</router-link></li>
+        <li><router-link to="/attrs">/attrs</router-link></li>
+        </ul>
+        <router-view></router-view>
+    </div>
+
+    <!-- 模板抽离出来 -->
+	<template id="hello">
+	  <div>
+	    <h2 >Hello {{name}} {{ $attrs }}</h2>
+	  </div>
+	</template>
+
+	</body>
+</html>
+<script type="text/javascript">
+
+function dynamicPropsFn (route) {
+  const now = new Date()
+  return {
+    name: (now.getFullYear() + parseInt(route.params.years)) + '!'
+  }
+}	
+	
+// 1. 定义（路由）组件。
+        const Hello = { template: '#hello' };
+        
+        // 2. 定义路由
+        const routes = [
+           { path: '/', redirect: '/hello/man' },  // 重定向
+		   { path: '/hello/:name', component: Hello, props: true }, // Pass route.params to props
+		   { path: '/static', component: Hello, props: { name: 'world' }}, // static values
+		   { path: '/dynamic/:years', component: Hello, props: dynamicPropsFn }, // custom logic for mapping between route and props
+		   { path: '/attrs', component: Hello, props: { name: 'attrs' }}
+        ]
+
+        // 3. 创建 router 实例，然后传 `routes` 配置
+        const router = new VueRouter({
+            routes // （缩写）相当于 routes: routes
+        })
+
+        // 4. 创建和挂载根实例。
+        // 记得要通过 router 配置参数注入路由，
+        // 从而让整个应用都有路由功能
+        const app = new Vue({
+          router
+        }).$mount('#box')
+
+        // 现在，应用已经启动了！
+</script>
