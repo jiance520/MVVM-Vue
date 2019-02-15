@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.css"/>
+    <script type="text/javascript" src="../js/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            Vue.config.keyCodes = {}
+            let vm = new Vue({
+                el: '.itany',
+                data: {
+                    msg: 'welcome to itany'
+                },
+                created: function () {
+//                    alert(111);
+                }
+            })
+        }
+    </script>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<!--这个指令保持在元素上直到关联实例结束编译。和 CSS 规则如 [v-cloak] { display: none } 一起用时，
+这个指令可以隐藏未编译的 Mustache 标签直到实例准备完毕-->
+<div class="itany">
+    <input type="text" v-model="msg"/>
+    <h3>aaa<span v-cloak>{{msg}}</span></h3><!--此处是要实现，执行created后，v-cloak-样式的内容不加载，点确认后才加载-->
+    <h3 v-text="msg"></h3>
+    <h3 v-html="msg"></h3>
+    <h3 v-once>{{msg}}</h3><!--v-once绑定值之后，改变值不会影响v-once的值。-->
+    <h3 v-pre>{{msg}}</h3><!--不编译{{msg}}，直接原样{{msg}}显示。-->
+</div>
+</body>
+</html>

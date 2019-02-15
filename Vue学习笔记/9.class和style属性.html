@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.css"/>
+    <script type="text/javascript" src="../js/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            Vue.config.keyCodes = {}
+            let vm = new Vue({
+                el: '.itany',
+                data: {
+                    bb: 'aa',
+                    dd: 'cc',
+                    flag: true,
+                    num: 3,
+                    xx: {color: 'blue', fontSize: '30px'},
+                    yy: {backgroudColor: '#1b6d85'}
+                },
+                methods: {}
+            })
+        }
+    </script>
+    <style>
+        .aa {
+            color: red;
+            font-size: 20px;
+        }
+
+        .cc {
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+<div class="itany">
+    <!--<p class="aa">南京网博</p>&lt;!&ndash;原生css&ndash;&gt;-->
+    <!--<p :class="bb">南京网博</p>&lt;!&ndash;vue class属性绑定&ndash;&gt;-->
+    <!--<p :class="[bb,dd]">南京网博</p>&lt;!&ndash;vue属性绑定数组,使用多个class&ndash;&gt;-->
+    <p :class="{aa:true,cc:flag}">南京网博</p><!--直接使用json引用class，但是json属性值是布尔值-->
+    <p :class="{aa:num>0}">南京网博</p><!--直接使用json引用class，但是json属性值是布尔值-->
+
+    <p :style="xx">itany</p>
+    <p :style="[xx,yy]">itany</p>
+</div>
+</body>
+</html>

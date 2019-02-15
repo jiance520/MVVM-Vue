@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.css"/>
+    <script type="text/javascript" src="../js/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            Vue.config.keyCodes = {
+                a: 65,
+                f1: 112
+            }
+            let vm = new Vue({
+                el: '.itany',
+                data: {},
+                methods: {
+                    show(e) {
+                        console.log(e.keyCode);
+                        if (e.keyCode === 13) {
+                            console.log('按了回车');
+                        }
+                    },
+                    print(e) {
+                        console.log(e.keyCode);
+                    }
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+<div class="itany">
+    <!--键盘事件，@keypress @keydown @keyup-->
+    <!--@keydown：<input type="text" @keydown="show($event)"/>&lt;!&ndash;回车&ndash;&gt;-->
+    <!--@keydown.13：<input type="text" @keydown.13="print($event)"/>&lt;!&ndash;回车&ndash;&gt;-->
+    <!--@keydown.enter：<input type="text" @keydown.enter="print($event)"/>&lt;!&ndash;回车&ndash;&gt;-->
+    @keydown.up：<input type="text" @keydown.up="print($event)"/><!--方向键@keydown.38，向上-->
+    @keydown.a：<input type="text" @keydown.a="print($event)"/><!--方向键@keydown.38，向上-->
+    @keydown.f1：<input type="text" @keydown.f1="print($event)"/><!--方向键@keydown.38，向上-->
+</div>
+</body>
+</html>

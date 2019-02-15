@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.css"/>
+    <script type="text/javascript" src="../js/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            Vue.config.keyCodes = {}
+            let vm = new Vue({
+                el: '.itany',
+                data: {
+                    url: 'https://www.baidu.com/img/baidu_jgylogo3.gif',
+                    w: '200px',
+                    h: '80px'
+                },
+                methods: {}
+            })
+        }
+    </script>
+</head>
+<body>
+<div class="itany">
+    <!--<img src="{{url}}" alt="">&lt;!&ndash;错误写法&ndash;&gt;-->
+    <!--<img v-bind:src="url" alt="">-->
+    <img :src="url" :width="w" :height="h">
+</div>
+</body>
+</html>

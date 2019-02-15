@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.css"/>
+    <script type="text/javascript" src="../js/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            Vue.config.keyCodes = {};
+            Vue.filter('addZero', function (data) {
+                return data < 10 ? '0' + data : data;
+                /*个位补0*/
+            });
+            /*Vue.filter('number',(data,n)=>{/!*自定义全局过滤器，保留3位小数*!/
+                console.log(data,n);
+                return data.toFixed(3);
+            });*/
+            Vue.filter('date', data => {
+                let d = new Date(data);
+                return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+            });
+            let vm = new Vue({
+                el: '.itany',
+                data: {
+                    currentTime: Date.now()
+                },
+                filters: {
+                    number: (data, n) => {/*自定义局部过滤器，保留3位小数*/
+                        return data.toFixed(3);
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div class="itany">
+    <h3>{{8|addZero}}</h3>
+    <h3>{{12.345678|number(3)}}</h3>
+    <h3>{{currentTime|date}}</h3><!--currentTime自定义的当前时间currentTime:Date.now()，-->
+</div>
+</body>
+</html>
