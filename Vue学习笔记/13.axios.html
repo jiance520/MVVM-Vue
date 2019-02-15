@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.css"/>
+    <script type="text/javascript" src="../js/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../js/axios.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            let vm = new Vue({
+                el: '.itany',
+                data: {
+                    user: {
+                        name: 'alice',
+                        age: 19
+                    }
+                },
+                methods: {
+                    send() {
+                        axios({
+                            method: 'get',
+                            url: 'user.json'
+                        }).then(function (resp) {
+                            console.log(resp.data);
+                            /*重点response.data*/
+                        }).catch(resp => {
+                            console.log("请求失败:" + resp.status + ',' + resp.statusText);
+                        });
+                    },
+                    sendGet() {
+//                        axios.get("server.php?name=tom&age=23")/*通过url传参*/
+                        axios.get("server.php", {
+                            params: {
+                                name: 'alice',
+                                age: 19
+                            }
+                        })/*通过params传参*/
+                            .then(resp => {
+                                console.log(resp.data)
+                            })
+                            .catch(resp => {
+                                console.log("请求失败:" + resp.status + ',' + resp.statusText);
+                            });
+                    },
+                    sendPost() {
+//                        axios.post("server.php",{/*post的方式传递的json数据，不是Form Data类型，无法接收，只能以键值key=value的方式传递*/
+//                            name:'alice',
+//                            age:19
+//                        })
+//                        axios.post("server.php","name=alice&age=20")
+                        axios.post("server.php", this.user, {
+                            transformRequest: [function (data) {
+                                let params = '';
+                                for (let index in data) {
+                                    console.log(index);
+                                    params += index + '=' + data[index] + '&';
+                                    /*自己拼接对象为key=value*/
+                                }
+                                return params;
+                            }]
+                        })
+                            .then(resp => {
+                                console.log(resp.data)
+                            })
+                            .catch(resp => {
+                                console.log("请求失败:" + resp.status + ',' + resp.statusText);
+                            });
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div class="itany">
+    <button @click="send">发送ajax请求</button>
+    <button @click="sendGet">get方式发送ajax请求</button>
+    <button @click="sendPost">post方式发送ajax请求</button>
+</div>
+</body>
+</html>
