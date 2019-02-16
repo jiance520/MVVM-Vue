@@ -8,6 +8,7 @@
     <script type="text/javascript" src="../js/jquery-1.12.4.js"></script>
     <script type="text/javascript" src="../js/bootstrap.js"></script>
     <script type="text/javascript" src="../js/axios.js"></script>
+    <script type="text/javascript" src="../js/vue-resource.js"></script>
     <script type="text/javascript">
         window.onload = function () {
             let vm = new Vue({
@@ -16,7 +17,8 @@
                     user: {
                         name: 'alice',
                         age: 19
-                    }
+                    },
+                    uid: ''
                 },
                 methods: {
                     send() {
@@ -68,6 +70,24 @@
                             .catch(resp => {
                                 console.log("请求失败:" + resp.status + ',' + resp.statusText);
                             });
+                    },
+                    getUserById(uid) {
+                        axios.get(`https://api.github.com/users/${uid}`).then(resp => {
+                            console.log(resp.data);
+                            this.user = resp.data;
+                        });
+                    },
+                    sendJSONP() {
+                        /*https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su
+                        ?wd=a&json=1&p=3&sid=&req=2&csor=1&cb=jQuery110205132049383096289_1550241788267&_=1550241788270*/
+                        this.$http.jsonp(`https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su`, {
+                            params: {
+                                wd: 'a'/*发送的数据*/
+                            },
+                            jsonp: 'cb'/*百度jsonp的callback别名是cb，所以这里要修改跟百度一致*/
+                        }).then(resp => {
+                            console.log(resp.data.s);
+                        });
                     }
                 }
             });
@@ -79,6 +99,13 @@
     <button @click="send">发送ajax请求</button>
     <button @click="sendGet">get方式发送ajax请求</button>
     <button @click="sendPost">post方式发送ajax请求</button>
+    githubId:<input type="text" v-model="uid"/>
+    <button @click="getUserById(uid)">通过id查找gighub帐户信息</button><!--跨域请求-->
+    <br>
+    姓名：{{user.name}}<br>
+    头像：<img :src="user.avatar_url" alt="">
+    <br>
+    <button @click="sendJSONP">向百度搜索a发送jsonp请求</button><!--跨域请求-->
 </div>
 </body>
 </html>
