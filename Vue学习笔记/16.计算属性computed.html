@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.css"/>
+    <script type="text/javascript" src="../js/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../js/axios.js"></script>
+    <script type="text/javascript" src="../js/vue-resource.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            let vm = new Vue({
+                el: '#itany',
+                data: {
+                    /*普通属性*/
+                    msg: 'welcome to itany',
+                    num1: 6
+                },
+                computed: {
+                    msg2: function () {/*计算属性数据，不能直接赋值，使用函数*/
+                        return '欢迎光临';
+                    },
+                    reverseMsg: function () {
+                        return this.msg.split(" ").reverse().join(" ");
+                    },
+                    num2: {
+                        get: function () {
+                            console.log('num2:' + new Date());
+                            return this.num1 - 1;
+                            /*默认就是get方法*/
+                        },
+                        set: function (val) {
+                            this.num1 = val;
+                            /*给计算属性赋值，不能直接赋值，只能给计算属性依赖的属性重新赋值*/
+                        }
+                    }
+                },
+                methods: {
+                    change() {
+                        this.msg = 'i love you';
+                    },
+                    getMsg() {
+                        console.log('num2:' + new Date());
+                        return this.num1 - 1;
+                    },
+                    fn() {
+                        setInterval(function () {
+//                            console.log(vm.num2);/*时间new Date()只执行一次*/
+                            console.log(vm.getMsg());
+                            /*时间new Date()会执行多次*/
+                        }, 1000);
+                    },
+                    change2() {
+                        this.num2 = 111;
+                    }
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+<div id="itany">
+    <h4>msg: {{msg}}</h4><br>
+    <h4>计算属性reverseMsg: {{reverseMsg}}</h4><br><!--计算属性值，字符串反转再显示-->
+    <h4>计算属性msg2: {{msg2}}</h4><!--计算属性值-->
+    <button @click="change">修改msg</button>
+    <h4>计算属性getMsg():{{getMsg()}}</h4>
+    <button @click="fn">测试</button>
+    <button @click="change2">修改计算属性的值num2</button>
+</div>
+</body>
+</html>

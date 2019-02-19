@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.css"/>
+    <script type="text/javascript" src="../js/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../js/axios.js"></script>
+    <script type="text/javascript" src="../js/vue-resource.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            let vm = new Vue({
+                el: '#itany',
+                data: {
+                    msg: 'welcome to itany'
+                },
+                beforeCreate() {
+                    alert("组件实例刚创建，事件和生命周期");
+                },
+                created() {
+                    alert("组件实例已经创建，注入生效");
+                },
+                beforeMount() {
+                    alert("将模板编译为渲染函数，还未挂载");
+                },
+                mounted() {
+                    alert("创建vm虚拟el模板，已经挂载，渲染页面，页面数据展示");
+                },
+                beforeUpdate() {
+                    alert("组件更新前");
+                },
+                updated() {
+                    alert("组件更新后");
+                },
+                beforeDestroy() {
+                    alert("组件销毁前");
+                    /*使用当前实例this.$destroy()来销毁*/
+                },
+                destroyed() {
+                    alert("组件销毁后");
+                },
+                methods: {
+                    update() {
+                        this.msg = '欢乐使用'
+                    },
+                    destroy() {
+                        this.$destroy();
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div id="itany">
+    {{msg}}
+    <button @click="update">更新</button>
+    <button @click="destroy">销毁</button>
+</div>
+</body>
+</html>

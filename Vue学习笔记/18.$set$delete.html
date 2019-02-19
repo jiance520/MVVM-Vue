@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.css"/>
+    <script type="text/javascript" src="../js/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../js/axios.js"></script>
+    <script type="text/javascript" src="../js/vue-resource.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            let vm = new Vue({
+                el: '#itany',
+                data: {
+                    user: {
+                        id: 1001,
+                        name: 'tom'
+                    }
+                },
+                methods: {
+                    doUpdate() {
+                        this.user.name = "汤姆";
+                    },
+                    doAdd() {
+//                        this.user.age=25;/*通过普通方式为对象添加属性时，vue无法实时更新*/
+//                        this.$set(this.user,'age',23);/*此方法添加的属性，页面可以实时更新，前提是之前没有设置该属性*/
+                        if (!this.user.age) {
+                            Vue.set(this.user, 'age', 20);
+                            /*此方法添加的属性，页面可以实时更新，前提是之前没有设置该属性*/
+                        }
+                        console.log(this.user.age);
+                    },
+                    deDelete() {
+                        if (this.user.age) {
+//                            delete this.user.age;//无效
+//                            Vue.delete(this.user,'age');
+                            vm.$delete(this.user, 'age');
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div id="itany">
+    <button @click="doUpdate">修改name属性</button>
+    <button @click="doAdd">添加age属性</button><!--添加的属性，页面不监视，只监视固有属性的变化-->
+    <button @click="deDelete">删除age属性</button><!--添加的属性，页面不监视，只监视固有属性的变化-->
+    <h4>name:{{user.name}}</h4>
+    <h4>age:{{user.age}}</h4>
+</div>
+</body>
+</html>

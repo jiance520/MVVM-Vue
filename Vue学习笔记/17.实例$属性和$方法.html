@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.css"/>
+    <script type="text/javascript" src="../js/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../js/axios.js"></script>
+    <script type="text/javascript" src="../js/vue-resource.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            let vm = new Vue({
+                el: '#itany',
+                data: {
+                    msg: 'welcome to itany',
+                    name: 'tom'
+                },
+                computed: {},
+                methods: {},
+                name: '自定义属性name',
+                show: function () {
+                    console.log('自定义方法show。');
+                }
+            });
+//            常用属性
+            vm.$el.style.color = 'red';
+//            console.log(vm.$el);/*vm.$el获取的是DOM对象*/
+            console.log(vm.name);
+            console.log(vm.$data.name);//===console.log(vm.name);
+            console.log(vm.$options.name);
+            /*输出自定义属性，options是复数*/
+            vm.$options.show();
+            /*show()加括号是执行方法，不加是输出属性*/
+            console.log(vm.$refs.ref1);
+            /*获取vm内部的某个元素/节点/DOM对象，类似通过id，class获取指定元素*/
+
+//            常用方法
+            vm.$mount('#mount');//不写el:''，手机挂载vue实例到指定DOM元素
+            new Vue({
+                data: {msg: '手动挂载'},
+                methods: {}
+            }).$mount('#mount');
+            vm.name = "汤姆";
+//            vm.$destroy();//只销毁实例中的事件相关，不销毁属性值。
+//            vm.$nextTick(callback);//在DOM更新完后，再执行回调函数。一般在数据更新后使用该函数。
+// DOM没更新完，Vue实例响应式并不是数据发生改变后DOM立即更新，需要按一定的策略进行DOM更新，需要时间。
+            console.log(vm.$refs.title.textContent);
+            /*DOM未更新完*/
+            vm.$nextTick(function () {/*DOM已更新完*/
+                console.log(vm.$refs.title.textContent);
+            });
+        }
+    </script>
+</head>
+<body>
+<div id="itany">
+    {{msg}}
+    <div ref="ref1">ref1
+        <div ref="ref2">ref2</div>
+    </div>
+    <div ref="title">标题:{{name}}</div>
+</div>
+<div id="mount" ref="ref3">ref3
+    {{msg}}
+</div>
+</body>
+</html>
