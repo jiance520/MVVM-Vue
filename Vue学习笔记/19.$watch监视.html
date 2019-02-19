@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.css"/>
+    <script type="text/javascript" src="../js/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../js/axios.js"></script>
+    <script type="text/javascript" src="../js/vue-resource.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            let vm = new Vue({
+                el: '#itany',
+                data: {
+                    name: 'tom',
+                    user: {
+                        name: 'tom',
+                        age: 23
+                    }
+                },
+                methods: {},
+                watch: {
+                    name: function (newValue, oldValue) {
+                        console.log('name修改前的值：' + oldValue + ',修改后的值：' + newValue);
+                    },
+//                    user:function (newValue,oldValue) {/*无效*/
+//                        console.log('user修改前的值：'+oldValue+',修改后的值：'+newValue);
+//                    },
+                    user: {
+                        handler: function (newValue, oldValue) {
+                            /*oldValue.name===newValue.name*/
+                            console.log('user修改前的值：' + oldValue.name + ',修改后的值：' + newValue.name);
+                        },
+                        deep: true// 深度监视，用于监视对象内部属性值的变化来判断对象是否变化。
+                    }
+                }
+            });
+            vm.$watch('name', function (newValue, oldValue) {
+                console.log('name修改前的值：' + oldValue + ',修改后的值：' + newValue);
+            });
+            vm.$watch('user.name', function (newValue, oldValue) {
+                console.log('user.name修改前的值：' + oldValue + ',修改后的值：' + newValue);
+            });
+            vm.$watch('user', function (newValue, oldValue) {
+                console.log('name修改前的值：' + oldValue.name + ',修改后的值：' + newValue.name);
+            }, {deep: true});//https://cn.vuejs.org/v2/api/#vm-watch
+        }
+    </script>
+</head>
+<body>
+<div id="itany">
+    <input type="text" v-model="name"/>
+    实例的属性：{{name}}
+    <br>
+    <input type="text" v-model="user.name"/>
+    对象的属性：{{user.name}}
+</div>
+</body>
+</html>
